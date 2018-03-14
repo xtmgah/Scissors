@@ -1,4 +1,9 @@
-#' Step 2 outlier detection: combine two types of outliers
+#' Detect local shape outliers with a residual matrix
+#'
+#' This function identifies local shape variants by mining locally on/off abnormalities.
+#'
+#' @param resmat a residual matrix from PCA, a data matrix subtracted by a low-rank matrix.
+#' @param rawmat a raw coverage matrix, dataI from \link{process_data}
 #' @export
 detect_onoffout = function(resmat,rawmat,exonset,
                            winlength=100,readconstr=10,
