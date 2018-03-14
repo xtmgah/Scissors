@@ -1,4 +1,9 @@
-#' Step 2 outlier detection
+#' Detect local shape abnormality in RNA-seq data
+#'
+#' This function discovers outlying subjects whose RNA-seq have "local" abnormal shapes
+#' and provides the most outlying window-direction for each outlier.
+#'
+#' @param miscGlobalobj object from \link{miscGlobal}
 #' @export
 miscLocal = function(miscGlobalobj,covermat,exonset,
                       winlength=100,readconstr=10,
