@@ -1,4 +1,4 @@
-#' Detect global shape abnormality in RNA-seq data
+#' Detect global shape variants in RNA-seq data
 #'
 #' This function discovers outlying subjects whose RNA-seq have abnormal shapes
 #' and provides the most outlying direction for each outlier.

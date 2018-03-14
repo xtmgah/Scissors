@@ -1,4 +1,4 @@
-#' Detect local shape abnormality in RNA-seq data
+#' Detect local shape variants in RNA-seq data
 #'
 #' This function discovers outlying subjects whose RNA-seq have "local" abnormal shapes
 #' and provides the most outlying window-direction for each outlier.
