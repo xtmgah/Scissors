@@ -4,7 +4,7 @@
 #' and provides the most outlying direction for each outlier.
 #'
 #' @param data precessed RNA-seq data from \link{process_data}
-#' @param siglev significance level of the Chi-squared distribution
+#' @param siglev the significance level of the Chi-squared distribution. Default is 1e-10.
 #' @param subt.mean logical, whether to subtract mean before SVD. Default is FALSE.
 #' @param PCnum the number of PCs to be used.
 #' If NULL (the default) the number of PCs will be estimated.

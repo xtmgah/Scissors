@@ -6,6 +6,13 @@
 #' @param miscGlobalobj object from \link{miscGlobal}
 #' @param overmat raw coverage matrix, dataI from \link{process_data}
 #' @param exonset data annotation matrix, exonset from \link{process_data}
+#' @param winlength the window length. Default is 100.
+#' @param readconstr the minimum mean read-counts. Default is 10.
+#' @param siglev the significance level for a robust outlier detection. Default is 1e-5.
+#' IF cutoff is specified, siglev is not used.
+#' @param cutoff the cutoff value for outlying statistics.
+#' If NULL, the cutoff value is computed based on the specified siglev.
+#'
 #' @export
 miscLocal = function(miscGlobalobj,covermat,exonset,
                       winlength=100,readconstr=10,
