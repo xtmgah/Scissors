@@ -3,7 +3,7 @@
 #' This function discovers outlying subjects whose RNA-seq have abnormal shapes
 #' and provides the most outlying direction for each outlier.
 #'
-#' @param data precessed RNA-seq data from \link{process.data}
+#' @param data precessed RNA-seq data from \link{process_data}
 #' @param siglev significance level of the Chi-squared distribution
 #' @param subt.mean logical, whether to subtract mean before SVD. Default is FALSE.
 #' @param PCnum the number of PCs to be used.

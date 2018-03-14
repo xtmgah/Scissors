@@ -4,6 +4,8 @@
 #' and provides the most outlying window-direction for each outlier.
 #'
 #' @param miscGlobalobj object from \link{miscGlobal}
+#' @param overmat raw coverage matrix, dataI from \link{process_data}
+#' @param exonset data annotation matrix, exonset from \link{process_data}
 #' @export
 miscLocal = function(miscGlobalobj,covermat,exonset,
                       winlength=100,readconstr=10,
