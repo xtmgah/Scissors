@@ -1,8 +1,11 @@
+#' Provide the Anderson-Darling test statistic of standard normal distribution
+#'
+#' This function is based on ADStatQF function in MATLAB by Qing Feng.
+#'
+#' @param x an input vector
+#'
+#' @export
 ADstat.hy=function(x){
-  # Based on ADStatQF function in MATLAB by Qing Feng
-  # This function is used to calculate the Anderson Darling Test Statistics of
-  # Standard normal distribution
-  
   n = length(x);
   if (n < 7){
     return(print("Sample size must be greater than 7"));
