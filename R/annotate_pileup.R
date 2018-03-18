@@ -58,8 +58,8 @@ annotate_pileup = function(pileup,exon,input.type="whole_intron",
       output = pileup[exonic.region,];
       rm(intron.len.temp,ep.new.temp,exonic.region);
 
-      len.intron = 0;
-      ep.new = find.exon.hy(exon,is.intron=TRUE,num.intron=len.intron) ;
+      intron.len = 0;
+      ep.new = find.exon.hy(exon,is.intron=TRUE,num.intron=intron.len) ;
     } else {
       stop(output.type," is not an option for output.type.")
     }

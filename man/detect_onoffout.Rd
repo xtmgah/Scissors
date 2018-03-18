@@ -2,11 +2,16 @@
 % Please edit documentation in R/detect_onoffout.R
 \name{detect_onoffout}
 \alias{detect_onoffout}
-\title{Step 2 outlier detection: combine two types of outliers}
+\title{Detect local shape outliers with a residual matrix}
 \usage{
 detect_onoffout(resmat, rawmat, exonset, winlength = 100, readconstr = 10,
   siglev = NULL, cutoff = NULL)
 }
+\arguments{
+\item{resmat}{a residual matrix from PCA, a data matrix subtracted by a low-rank matrix.}
+
+\item{rawmat}{a raw coverage matrix, dataI from \link{process_data}}
+}
 \description{
-Step 2 outlier detection: combine two types of outliers
+This function identifies local shape variants by mining locally on/off abnormalities.
 }
