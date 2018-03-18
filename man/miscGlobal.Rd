@@ -2,16 +2,16 @@
 % Please edit documentation in R/miscGlobal.R
 \name{miscGlobal}
 \alias{miscGlobal}
-\title{Detect global shape abnormality in RNA-seq data}
+\title{Detect global shape variants in RNA-seq data}
 \usage{
 miscGlobal(data, siglev = 1e-10, subt.mean = FALSE, PCnum = NULL,
   maxPCnum = 20, eps = NULL, rm.PCdir = TRUE, ADcutoff = 10,
   filter.dir = TRUE, less.return = TRUE)
 }
 \arguments{
-\item{data}{precessed RNA-seq data from \link{process.data}}
+\item{data}{precessed RNA-seq data from \link{process_data}}
 
-\item{siglev}{significance level of the Chi-squared distribution}
+\item{siglev}{the significance level of the Chi-squared distribution. Default is 1e-10.}
 
 \item{subt.mean}{logical, whether to subtract mean before SVD. Default is FALSE.}
 

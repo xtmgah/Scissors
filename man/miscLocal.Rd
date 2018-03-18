@@ -2,11 +2,29 @@
 % Please edit documentation in R/miscLocal.R
 \name{miscLocal}
 \alias{miscLocal}
-\title{Step 2 outlier detection}
+\title{Detect local shape variants in RNA-seq data}
 \usage{
 miscLocal(miscGlobalobj, covermat, exonset, winlength = 100,
   readconstr = 10, siglev = 1e-05, cutoff = NULL)
 }
+\arguments{
+\item{miscGlobalobj}{object from \link{miscGlobal}}
+
+\item{exonset}{data annotation matrix, exonset from \link{process_data}}
+
+\item{winlength}{the window length. Default is 100.}
+
+\item{readconstr}{the minimum mean read-counts. Default is 10.}
+
+\item{siglev}{the significance level for a robust outlier detection. Default is 1e-5.
+IF cutoff is specified, siglev is not used.}
+
+\item{cutoff}{the cutoff value for outlying statistics.
+If NULL, the cutoff value is computed based on the specified siglev.}
+
+\item{overmat}{raw coverage matrix, dataI from \link{process_data}}
+}
 \description{
-Step 2 outlier detection
+This function discovers outlying subjects whose RNA-seq have "local" abnormal shapes
+and provides the most outlying window-direction for each outlier.
 }
