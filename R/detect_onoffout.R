@@ -4,6 +4,11 @@
 #'
 #' @param resmat a residual matrix from PCA, a data matrix subtracted by a low-rank matrix.
 #' @param rawmat a raw coverage matrix, dataI from \link{process_data}
+#' @param exonset exon/intron annotation matrix from \link{annotate_pileup}
+#' @param winlength the window size. Default is 100.
+#' @param readconstr the minimum reads count required to be considered for on/off local shape changes.
+#' Default is 10.
+#'
 #' @export
 detect_onoffout = function(resmat,rawmat,exonset,
                            winlength=100,readconstr=10,
