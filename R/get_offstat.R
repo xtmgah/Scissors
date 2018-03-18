@@ -1,4 +1,14 @@
-#' Step 2 outlier detection: get_offstat
+#' Detect off local shape changes in residual matrix.
+#'
+#' This function identifies off local shape changes based on window directions.
+#'
+#' @param resmat a residual matrix from PCA, a data matrix subtracted by a low-rank matrix.
+#' @param rawmat a raw coverage matrix, dataI from \link{process_data}
+#' @param exonset exon/intron annotation matrix from \link{annotate_pileup}
+#' @param winlength the window size. Default is 100.
+#' @param readconstr the minimum reads count required to be considered for on/off local shape changes.
+#' Default is 10.
+#'
 #' @export
 get_offstat= function(resmat,rawmat,exonset,
                       winlength=100,readconstr=10) {
