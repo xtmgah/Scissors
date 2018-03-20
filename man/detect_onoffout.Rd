@@ -11,6 +11,13 @@ detect_onoffout(resmat, rawmat, exonset, winlength = 100, readconstr = 10,
 \item{resmat}{a residual matrix from PCA, a data matrix subtracted by a low-rank matrix.}
 
 \item{rawmat}{a raw coverage matrix, dataI from \link{process_data}}
+
+\item{exonset}{exon/intron annotation matrix from \link{annotate_pileup}}
+
+\item{winlength}{the window size. Default is 100.}
+
+\item{readconstr}{the minimum reads count required to be considered for on/off local shape changes.
+Default is 10.}
 }
 \description{
 This function identifies local shape variants by mining locally on/off abnormalities.
