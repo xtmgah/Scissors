@@ -3,10 +3,10 @@
 estimate_offset = function(data.centered,rawmat,exonset,
                            smoothness=0.7,draw.plot=FALSE,main="Gene") {
 
-  medscale = data.centered$msf; exonset=process.obj$exonset;
+  medscale = data.centered$msf;
   n = ncol(data.centered$outdata);
 
-  case.sse = apply(data$outdata,2,FUN=bisqaure.sse)
+  case.sse = apply(data.centered$outdata,2,FUN=bisquare.sse)
   exonbase = c()
   for (j in 1:nrow(exonset)) {
     exonbase = c(exonbase,c(exonset[j,2]:exonset[j,3]))
@@ -34,8 +34,6 @@ estimate_offset = function(data.centered,rawmat,exonset,
     g[which(medscale<1)] = 1
   }
 
-  outdata = sweep(x=data.centered$outdata,2,g,FUN="/")
-
   if (draw.plot) {
     colmat=rep("black",length(goodcase))
     colmat[order(medscale[goodcase],decreasing=TRUE)] = rainbow(n=length(goodcase),start=0,end=0.8)
@@ -53,5 +51,5 @@ estimate_offset = function(data.centered,rawmat,exonset,
                     paste("gene length =",length(exonbase)),
                     paste("smoothness  =",round(smoothness,digits=1))))
   }
-  return(list(g=g,outdata=outdata))
+  return(g)
 }
