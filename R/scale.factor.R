@@ -1,3 +1,5 @@
+#'
+#' @export
 scale.factor = function(X,average="median",adjval=NULL) {
   ## % Obtain scale factors based on a adjusted center
   mean.vec = apply(X,1,FUN=function(x){adj.center(x,average=average,adjval=adjval)})

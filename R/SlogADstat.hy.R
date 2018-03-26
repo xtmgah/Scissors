@@ -1,3 +1,5 @@
+#'
+#' @export
 SlogADstat.hy = function(X,shift.val=1,average="median",adjval=NULL){
   # log transform
   datalog = log10(X + shift.val) - log10(shift.val) ;

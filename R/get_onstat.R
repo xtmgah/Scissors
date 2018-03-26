@@ -16,7 +16,8 @@ get_onstat= function(resmat,rawmat,exonset,readconstr=10) {
   for (j in 1:length(window_site)) {
     carea = c(window_site[j]:(window_site[j]+window_size[j]-1))
     # read_max[j] = max(medvec[carea])
-    medianmat[j,] = apply(rawmat[carea,],2,FUN=function(x){(median(x)>=readconstr)})
+    # medianmat[j,] = apply(rawmat[carea,],2,FUN=function(x){(median(x)>=readconstr)})
+    medianmat[j,] = apply(rawmat[carea,],2,FUN=function(x){(quantile(x)[4]>=readconstr)})
     pdrate[j,] = pd.rate.hy(apply(resmat[carea,],2,sum))
   }
   on_stat = apply(pdrate*medianmat,2,max)
