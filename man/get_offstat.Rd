@@ -2,10 +2,22 @@
 % Please edit documentation in R/get_offstat.R
 \name{get_offstat}
 \alias{get_offstat}
-\title{Step 2 outlier detection: get_offstat}
+\title{Detect off local shape changes in residual matrix.}
 \usage{
 get_offstat(resmat, rawmat, exonset, winlength = 100, readconstr = 10)
 }
+\arguments{
+\item{resmat}{a residual matrix from PCA, a data matrix subtracted by a low-rank matrix.}
+
+\item{rawmat}{a raw coverage matrix, dataI from \link{process_data}}
+
+\item{exonset}{exon/intron annotation matrix from \link{annotate_pileup}}
+
+\item{winlength}{the window size. Default is 100.}
+
+\item{readconstr}{the minimum reads count required to be considered for on/off local shape changes.
+Default is 10.}
+}
 \description{
-Step 2 outlier detection: get_offstat
+This function identifies off local shape changes based on window directions.
 }
