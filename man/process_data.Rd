@@ -7,7 +7,8 @@
 process_data(rawdata, exon, input.type = "whole_intron",
   output.type = "part_intron", intron.len = NULL, logshift.val = NULL,
   param.grid = NULL, average = "median", adjval = NULL, center.type = 1,
-  center.adjval = NULL, weight.method = "mean", max.weight = 2)
+  center.adjval = NULL, smoothness = 0.7, draw.plot = FALSE,
+  plot.main = "Gene", weight.method = "mean", max.weight = 2)
 }
 \description{
 Processing data
