@@ -4,7 +4,7 @@
 \alias{logtransform_data}
 \title{Log-transforming data}
 \usage{
-logtransform_data(data, logshift.val = NULL, ...)
+logtransform_data(data, logshift.val = NULL, param.grid = NULL, ...)
 }
 \arguments{
 \item{data}{data to be transformed}
