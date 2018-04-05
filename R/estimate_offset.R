@@ -31,7 +31,7 @@ estimate_offset = function(data.centered,rawmat,exonset,
 
     g[goodcase[order(medscale[goodcase])[which(lowess1[[2]]>0)]]] = lowess2$y
     g[which(g<1)] = 1
-    g[which(medscale<1)] = 1
+    # g[which(medscale<1)] = 1
   }
 
   if (draw.plot) {
