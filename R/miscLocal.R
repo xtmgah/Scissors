@@ -33,7 +33,11 @@ miscLocal = function(miscGlobalobj,covermat,exonset,
   out2on = changeID$new[resmat_out$on_outliers]; out2off = changeID$new[resmat_out$off_outliers];
   ## Step 2 MOD
   MOD = matrix(0,nrow=nrow(resmat),ncol=n)
-  MOD[,-out1] = resmat_out$MOD;
+  if (length(out1)>=1) {
+    MOD[,-out1] = resmat_out$MOD;
+  } else {
+    MOD = resmat_out$MOD;
+  }
 
   cutoff = resmat_out$cutoff;
   out2stat = resmat_out$onoff_stat;
