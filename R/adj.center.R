@@ -8,13 +8,13 @@
 #' @param adjval the lower bound above which the values will be included to calculate the center.
 #'
 #' @export
-adj.center = function(x,average="median",adjval=NULL) {
+adj.center = function(x,average="median",trim=0.1,adjval=NULL) {
   ##  % Obtain adjusted center (mean or median)
   if (is.null(adjval)) {
     if (average=="median") {
       center.val = median(x);
     } else {
-      center.val = mean(x);
+      center.val = mean(x,trim=trim);
     }
   } else {
     nonzero.pos = which(x>adjval)

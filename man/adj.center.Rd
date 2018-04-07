@@ -4,7 +4,7 @@
 \alias{adj.center}
 \title{Provide a center value adjusted by a lower bound}
 \usage{
-adj.center(x, average = "median", adjval = NULL)
+adj.center(x, average = "median", trim = 0.1, adjval = NULL)
 }
 \arguments{
 \item{x}{an input vector, data values.}
