@@ -11,11 +11,13 @@ normalize_data = function(datalog,rawmat,exonset,
   
   ## loop until no different variations 
   g2 = g1.offset$g
-  while (max(g2)>1.05) {
+  k = 1
+  while ((k<5) & (max(g2)>1.05)) {
     g2.offset = estimate_offset(msf=msf,cenmat=datactr,rawmat=rawmat,exonset=exonset,
                                 smoothness=smoothness,draw.plot=F)
     g2 = g2.offset$g
     datactr = sweep(x=datactr,2,g2,FUN="/")
+    k = k+1
   }
   if (draw.plot) {
     plot_offset(offset.obj=g1.offset,draw.legend=T,main=GeneName)
