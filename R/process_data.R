@@ -2,10 +2,10 @@
 #' @export
 process_data = function(rawdata,exon,input.type="whole_intron",
                         output.type="part_intron",intron.len=NULL,
-                        logshift.val=NULL,param.grid=NULL,average="median",adjval=NULL,
+                        logshift.val=NULL,param.grid=NULL,average="mean",trim=0.1,adjval=NULL,
                         center.type=1,center.adjval=NULL,
                         smoothness=0.7,draw.plot=FALSE,plot.main="Gene",
-                        weight.method="mean",max.weight=2) {
+                        weigh=FALSE,weight.method="mean",max.weight=2) {
 
   # Annotate pileup data
   data.annotation = annotate_pileup(pileup=rawdata,exon=exon,
@@ -21,18 +21,25 @@ process_data = function(rawdata,exon,input.type="whole_intron",
   # Center and normalize data
   data.normalized = normalize_data(data=data.log$outdata,rawmat=data.annotation$out.pileup,exonset=exonset,
                                    center.type=center.type,smoothness=smoothness,draw.plot=draw.plot,
-                                   main=plot.main,average=average,adjval=center.adjval)
-
-  # Weigh intronic region
-  data.weighted = weigh_data(data=data.normalized$outdata,dai=dai,method=weight.method,max.weight=max.weight)
+                                   main=plot.main,average=average,trim=trim,adjval=center.adjval)
 
   # Save output
-  dataI = data.annotation$out.pileup
+  dataraw = data.annotation$out.pileup
   datalog = data.log$outdata
-  dataS = data.weighted$outdata
 
-  return(list(dataI=dataI,datalog=datalog,dataS=dataS,dai=dai,exonset=exonset,
+  # Weigh intronic region
+  if (weigh) {
+    data.weighted = weigh_data(data=data.normalized$outdata,dai=dai,method=weight.method,max.weight=max.weight)
+    dataS = data.weighted$outdata
+  } else {
+    data.weighted=as.list(NULL);
+    dataS = data.normalized$outdata;
+  }
+
+  return(list(dataraw=dataraw,datalog=datalog,dataS=dataS,dai=dai,exonset=exonset,
               logshift.val=data.log$logshift.val,
-              msf=data.normalized$msf,g=data.normalized$g,data.center=data.normalized$data.center,
+              msf=data.normalized$msf,
+              g1.offset=data.normalized$g1.offset,g2.offset=data.normalized$g2.offset,
+              data.center=data.normalized$data.center,
               w=data.weighted$w))
 }
