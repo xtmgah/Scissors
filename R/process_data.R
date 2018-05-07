@@ -4,7 +4,7 @@ process_data = function(rawdata,exon,input.type="whole_intron",
                         output.type="part_intron",intron.len=NULL,
                         logshift.val=NULL,param.grid=NULL,average="mean",trim=0.1,adjval=NULL,
                         center.type=1,center.adjval=NULL,
-                        smoothness=0.7,draw.plot=FALSE,plot.main="Gene",
+                        loop=TRUE,smoothness=0.7,draw.plot=FALSE,plot.main="Gene",
                         weigh=FALSE,weight.method="mean",max.weight=2) {
 
   # Annotate pileup data
@@ -20,7 +20,7 @@ process_data = function(rawdata,exon,input.type="whole_intron",
 
   # Center and normalize data
   data.normalized = normalize_data(data=data.log$outdata,rawmat=data.annotation$out.pileup,exonset=exonset,
-                                   center.type=center.type,smoothness=smoothness,draw.plot=draw.plot,
+                                   loop=loop,center.type=center.type,smoothness=smoothness,draw.plot=draw.plot,
                                    main=plot.main,average=average,trim=trim,adjval=center.adjval)
 
   # Save output
