@@ -21,11 +21,13 @@ normalize_data = function(datalog,rawmat,exonset,loop=TRUE,
       k = k+1
     }
     if (draw.plot) {
-      plot_offset(offset.obj=g1.offset,draw.legend=T,main=GeneName)
-      plot_offset(offset.obj=g2.offset,draw.legend=T,main=GeneName)
+      plot_offset(offset.obj=g1.offset,draw.legend=T,
+                  main=paste(GeneName,": before normalization"))
+      plot_offset(offset.obj=g2.offset,draw.legend=T,
+                  main=paste(GeneName,": after normalization"))
     }
   } else {
-    g2 = g1.offset
+    g2.offset = g1.offset
     if (draw.plot) {
       plot_offset(offset.obj=g1.offset,draw.legend=T,main=GeneName)
     }
