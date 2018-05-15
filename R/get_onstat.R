@@ -32,6 +32,7 @@ get_onstat= function(resmat,rawmat,exonset,readconstr=10) {
       medianmat[j,] = apply(rawmat[carea,],2,FUN=function(x){(quantile(x,probs=0.75)>=readconstr)})
     }
     pdrate[j,] = pd.rate.hy(apply(resmat[carea,],2,sum))
+    # cat(paste(j,"   | nan =",sum(is.nan(pdrate[j,]))),"\n")
   }
   on_stat = apply(pdrate*medianmat,2,max)
   where_on = apply(pdrate*medianmat,2,which.max)
