@@ -10,27 +10,33 @@ normalize_data = function(datalog,rawmat,exonset,loop=TRUE,
   datactr = sweep(x=data.centered$outdata,2,g1.offset$g,FUN="/")
 
   ## loop until no different variations
-  if (loop) {
-    g2 = g1.offset$g
-    k = 1
-    while ((k<5) & (max(g2)>1.05)) {
-      g2.offset = estimate_offset(msf=msf,cenmat=datactr,rawmat=rawmat,exonset=exonset,
-                                  smoothness=smoothness,draw.plot=F)
-      g2 = g2.offset$g
-      datactr = sweep(x=datactr,2,g2,FUN="/")
-      k = k+1
-    }
-    if (draw.plot) {
-      plot_offset(offset.obj=g1.offset,draw.legend=T,
-                  main=paste(GeneName,": before normalization"))
-      plot_offset(offset.obj=g2.offset,draw.legend=T,
-                  main=paste(GeneName,": after normalization"))
-    }
+  if (sum((g1.offset$g-1)^2)<1e-10) {
+    cat("Note.   No adjustment applied. Data do not have enough expression.","\n")
+    cat("........Plots are omitted.","\n")
+    g2.offset=g1.offset
   } else {
-    g2.offset = g1.offset
-    if (draw.plot) {
-      plot_offset(offset.obj=g1.offset,draw.legend=T,main=GeneName)
+    if (loop) {
+      g2.offset = g1.offset
+      k = 1
+      while ((k<5) & (max(g2.offset$g)>1.05)) {
+        g2.offset = estimate_offset(msf=msf,cenmat=datactr,rawmat=rawmat,exonset=exonset,
+                                    smoothness=smoothness,draw.plot=F)
+        datactr = sweep(x=datactr,2,g2.offset$g,FUN="/")
+        k = k+1
+      }
+      if (draw.plot) {
+        plot_offset(offset.obj=g1.offset,draw.legend=T,
+                    main=paste(GeneName,": before normalization"))
+        plot_offset(offset.obj=g2.offset,draw.legend=T,
+                    main=paste(GeneName,": after normalization"))
+      }
+    } else {
+      g2.offset = g1.offset
+      if (draw.plot) {
+        plot_offset(offset.obj=g1.offset,draw.legend=T,main=GeneName)
+      }
     }
+
   }
   return(list(outdata=datactr,msf=msf,g1.offset=g1.offset,g2.offset=g2.offset,
               data.center=data.centered$data.center))
