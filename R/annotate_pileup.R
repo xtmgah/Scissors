@@ -1,14 +1,15 @@
 #' Annotating pileup
 #'
-#' This function is used to get
+#' This function is used to get pileup data based on new transcript
+#' for the purpose of the downstream outlier detection analysis.
 #' @param pileup raw coverage data
 #' @param exon exon
 #' @param input.type type of intronic region contained in pileup,
 #' with choices "whole_intron", "part_intron", or "only_exon"; the first is the default.
-#' @param output.type type of intronic region taht will be included in output,
+#' @param output.type type of intronic region that will be included in output,
 #' with choices "whole_intron", "part_intron", or "only_exon"; the second is the default.
 #' @param intron.len a length of intronic region that will be included in output.
-#' @keywords cats
+#' @keywords
 #' @export
 #' @examples
 annotate_pileup = function(pileup,exon,input.type="whole_intron",
