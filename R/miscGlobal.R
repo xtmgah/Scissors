@@ -36,7 +36,7 @@ miscGlobal = function(data,siglev=1e-10,subt.mean=FALSE,
                   PCnum=PCnum,maxPCnum=maxPCnum,eps=eps,
                   filter.dir=filter.dir,
                   less.return=FALSE);
-  resmat = data - z.pca$dirmat[,1:out$K]%*%z.pca$projmat[1:out$K,]
+  resmat = data - matrix(z.pca$dirmat[,1:out$K],ncol=out$K)%*%matrix(z.pca$projmat[1:out$K,],nrow=out$K)
 
   PCsubset = out$PCsubset; M = out$M; NPS = out$NPS;
   if (M==0) {

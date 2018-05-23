@@ -1,3 +1,5 @@
+#'
+#' @export
 pca2misc = function(scoremat,eigenvalue,dimension,
                    PCnum=NULL,maxPCnum=20,eps=NULL,rm.PCdir=TRUE,ADcutoff=10,
                    filter.dir=TRUE,
@@ -19,14 +21,14 @@ pca2misc = function(scoremat,eigenvalue,dimension,
       eps = (1/d);
     }
     result=PCnum.gamma.hy(eigenval=eigenval,d=d,n=n,eps=eps);
-    K = min(result$K,maxPCnum);
+    K = max(1,min(result$K,maxPCnum));
   } else {
     K = PCnum;
   }
   ## Choose normal directions
   if (is.logical(rm.PCdir)){
     if (rm.PCdir) {
-      badPCdir = which(apply(projmat[1:K,],1,ADstatWins.hy)>ADcutoff);
+      badPCdir = which(apply(matrix(projmat[1:K,],nrow=K),1,ADstatWins.hy)>ADcutoff);
       if (length(badPCdir)>0) {
         PCsubset = c(1:K)[-badPCdir];
       } else {
