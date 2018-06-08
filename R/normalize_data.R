@@ -11,7 +11,7 @@ normalize_data = function(datalog,rawmat,exonset,loop=TRUE,
 
   ## loop until no different variations
   if (sum((g1.offset$g-1)^2)<1e-10) {
-    cat("Note.   No adjustment applied. Data do not have enough expression.","\n")
+    cat("No adjustment applied. Data do not have enough expression.","\n")
     cat("........Plots are omitted.","\n")
     g2.offset=g1.offset
   } else {
