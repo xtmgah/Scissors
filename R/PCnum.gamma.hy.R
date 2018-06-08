@@ -53,7 +53,7 @@ PCnum.gamma.hy = function(eigenval,d,n,eps=1e-4){
     theta.0[2] = a[1]/(a[2]-(1+y)*(a[1]^2)); theta.0[1] = a[1]*theta.0[2];
 
     obj.f = function(x){ lss.gamma(theta=x,m=b,xi=(1-eps))}
-    S1 = bobyqa(theta.0,obj.f,lower=c(0,0),upper=c(1000,1000))
+    S1 = bobyqa(theta.0,obj.f,lower=c(0,0),upper=c(1e+5,1e+5))
     theta.1 = S1$par
 
     upper = qgamma((1-eps),shape=theta.1[1],rate=theta.1[2])
