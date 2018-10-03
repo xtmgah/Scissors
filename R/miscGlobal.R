@@ -50,8 +50,9 @@ miscGlobal = function(data,siglev=1e-10,subt.mean=FALSE,
   if (less.return) {
     NPS = MOD = z.pca = resmat = NULL;
   }
+  cutoff = sqrt(qchisq(p=(1-siglev),df=length(PCsubset)))
 
   return(list(OS=out$OS,OSpval=out$OSpval,NPS=NPS,MOD=MOD,pca=z.pca,resmat=resmat,
               outliers=out$outliers,outOS=out$outOS,outliers.sort=out$outliers.sort,outOS.sort=out$outOS.sort,
-              M=out$M,PCsubset=out$PCsubset,rm.PCdir=out$rm.PCdir));
+              M=out$M,PCsubset=out$PCsubset,rm.PCdir=out$rm.PCdir,cutoff=cutoff));
 }
