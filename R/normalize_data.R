@@ -8,6 +8,7 @@ normalize_data = function(datalog,rawmat,exonset,loop=TRUE,
                                     smoothness=smoothness,draw.plot=F,main=main)
   msf = data.centered$msf
   datactr = sweep(x=data.centered$outdata,2,g1.offset$g,FUN="/")
+  goodcase = g1.offset$goodcase
 
   ## loop until no different variations
   if (sum((g1.offset$g-1)^2)<1e-10) {
@@ -39,5 +40,5 @@ normalize_data = function(datalog,rawmat,exonset,loop=TRUE,
 
   }
   return(list(outdata=datactr,msf=msf,g1.offset=g1.offset,g2.offset=g2.offset,
-              data.center=data.centered$data.center))
+              data.center=data.centered$data.center,goodcase=goodcase))
 }

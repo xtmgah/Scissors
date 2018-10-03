@@ -40,6 +40,7 @@ process_data = function(rawdata,exon,input.type="whole_intron",
               logshift.val=data.log$logshift.val,
               msf=data.normalized$msf,
               g1.offset=data.normalized$g1.offset,g2.offset=data.normalized$g2.offset,
+              goodcase=data.normalized$goodcase,
               data.center=data.normalized$data.center,
               w=data.weighted$w))
 }
