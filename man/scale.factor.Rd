@@ -4,7 +4,8 @@
 \alias{scale.factor}
 \title{Obtain median scale factors based on a adjusted center}
 \usage{
-\method{scale}{factor}(X, average = "mean", trim = 0.1, adjval = NULL)
+\method{scale}{factor}(X, average = "mean", trim = 0.1,
+  adjval = NULL)
 }
 \description{
 Obtain median scale factors based on a adjusted center

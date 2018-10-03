@@ -4,8 +4,8 @@
 \alias{detect_onoffout}
 \title{Detect local shape outliers with a residual matrix}
 \usage{
-detect_onoffout(resmat, rawmat, exonset, winlength = 100, readconstr = 10,
-  siglev = NULL, cutoff = NULL)
+detect_onoffout(resmat, rawmat, exonset, winlength = 100,
+  readconstr = 10, siglev = NULL, cutoff = NULL)
 }
 \arguments{
 \item{resmat}{a residual matrix from PCA, a data matrix subtracted by a low-rank matrix.}

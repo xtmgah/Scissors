@@ -4,8 +4,8 @@
 \alias{getShiftParam}
 \title{Shift parameter}
 \usage{
-getShiftParam(X, param.grid = NULL, average = "median", adjval = NULL,
-  plot = FALSE)
+getShiftParam(X, param.grid = NULL, average = "median",
+  adjval = NULL, plot = FALSE)
 }
 \description{
 Shift parameter

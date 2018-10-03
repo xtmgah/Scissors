@@ -5,11 +5,11 @@
 \title{kernel density function}
 \usage{
 kdeplot.hy(x, bandwidth = NULL, indlist = NULL, indlist2 = NULL,
-  colmat = NULL, indcol1 = "red", indcol2 = "cadetblue", text = FALSE,
-  textwhat = NULL, indpch = 16, indcex = 0.9, low = 0.4, high = 0.7,
-  line.col = "black", line.lwd = 1, xlab = NULL, ylab = NULL,
-  xlim = NULL, ylim = NULL, main = NULL, cex.main = 1.2,
-  ADlegend = FALSE, ...)
+  colmat = NULL, indcol1 = "red", indcol2 = "cadetblue",
+  text = FALSE, textwhat = NULL, indpch = 16, indcex = 0.9,
+  low = 0.4, high = 0.7, line.col = "black", line.lwd = 1,
+  xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
+  main = NULL, cex.main = 1.2, ADlegend = FALSE, ...)
 }
 \description{
 kernel density function

@@ -1,3 +1,8 @@
+#' Finding exons and introns
+#'
+#' This function is used to find exons and introns that will be used
+#' in the downstream analysis
+#' @export
 find.exon.hy <- function(exon,is.intron=FALSE,num.intron=NULL){
   ## % First version: find.exon.hy.2; Second version: find.exon.hy.3;
   ## % Last updated: 1/14/2016
@@ -14,8 +19,8 @@ find.exon.hy <- function(exon,is.intron=FALSE,num.intron=NULL){
   ep <- cbind(epl,epr) ;
   if (!is.intron){
     ep2 <- ep - ep[1,1] + 1;
-    ep3 <- ep - ep[,1] + 1 ;    
-    if (nrow(ep3)>1){ new.ep <- ep3 + c(0,cumsum(ep3[1:(nrow(ep3)-1),2])) } else { new.ep <- ep3 }    
+    ep3 <- ep - ep[,1] + 1 ;
+    if (nrow(ep3)>1){ new.ep <- ep3 + c(0,cumsum(ep3[1:(nrow(ep3)-1),2])) } else { new.ep <- ep3 }
     coverage.col <- c();
     for (iep in 1:nrow(ep2)){
       coverage.col <- c(coverage.col, ep2[iep,1]:ep2[iep,2])
@@ -59,7 +64,7 @@ find.exon.hy <- function(exon,is.intron=FALSE,num.intron=NULL){
     }
     return(list(coverage.col=coverage.col,epl=new.ep[,2],epr=new.ep[,3],ep=new.ep));
     #	coverage.col = bp positions that will be used among the whole transcript (exon+intron)
-    #	epl, epr = left and right exon positions in coverage.col 
-    
+    #	epl, epr = left and right exon positions in coverage.col
+
   }
 }

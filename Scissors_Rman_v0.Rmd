@@ -1,0 +1,276 @@
+---
+title: "MiSCseq manual"
+author: "Hyo Young Choi"
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+    number_sections: yes
+  html_document:
+    fig_height: 6
+    fig_width: 12
+    number_sections: yes
+    toc: yes
+    toc_depth: 2
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup,include=FALSE}
+# Need the knitr package to set chunk options
+knitr::opts_chunk$set(cache=TRUE, autodep=TRUE, cache.comments=FALSE,
+               warning=FALSE,message=FALSE,cache.lazy=FALSE)
+```
+
+```{r, install_package,echo=FALSE,eval=FALSE,include=FALSE}
+library("devtools"); library("roxygen2");
+package_path = "~/Dropbox/Research/hyochoi_GitHub/"
+
+setwd(package_path)
+# create("MiSCseq")
+
+# Save functions
+# Add documentation
+
+setwd("./MiSCseq")
+document()
+
+setwd("..")
+install("MiSCseq")
+```
+
+# Getting started
+
+## load MiSCseq package
+
+
+```{r, load_package}
+package_path = "~/Dropbox/Research/hyochoi_GitHub/"
+library("MiSCseq")
+```
+
+```{r, load_functions,echo=FALSE}
+# Other functions
+CoveragePath = "~/Dropbox/Research/Data/TCGA_extended_exon/"
+Rsource = "~/Dropbox/Research/Hayes-lab/NDA-2014/dataset/"
+Rcode = "~/Dropbox/Research/Hayes-lab/NDA-2014/code/"
+
+# source(paste0(Rcode,"graphic_code_v1.R"));
+
+```
+
+
+# Process data
+
+## Load RNA-seq read counts data 
+
+```{r, load_toydata}
+load(paste0(package_path,"MiSCseq/toydata/toygene_coverage.RData"))
+GeneName = toygene_name
+rawdata = toygene_coverage   # Raw counts data
+exon = toygene_exon        # Exon info. 
+```
+
+```{r, echo=FALSE}
+cat(paste("      GeneName =",GeneName," coverage ready"),"\n")
+cat(paste("     ",exon),"\n")
+cat(paste("      # Subjects =",ncol(rawdata)),"\n")
+
+```
+
+```{r, display_data0,echo=FALSE}
+
+annotation0 = annotate_pileup(pileup=rawdata,exon=exon,input.type="whole_intron",
+                             output.type="whole_intron",intron.len=NULL)
+exonset0 = annotation0$dai$epm
+data0 = annotation0$out.pileup
+
+RNAcurve(datmat=data0,exonset=exonset0,indlist=NULL,
+            plot.title="Gene TOY: raw coverage")
+```
+
+
+## Annotate data
+
+```{r, annotate_data}
+data.annotation = annotate_pileup(pileup=rawdata,exon=exon,
+                                  input.type="whole_intron",output.type="part_intron",intron.len=NULL)
+
+data1 = data.annotation$out.pileup
+dai = data.annotation$dai
+exonset = dai$epm
+exonset
+dai$intron.len
+```
+
+```{r, display_data1,echo=FALSE}
+x.mda <- svd(data1) ;
+projmat <- diag(x.mda$d)%*%t(x.mda$v) ;
+projmat[1,] <- -projmat[1,] ;
+colmat <- rainbow(n=length(projmat[1,]), start=0, end=0.756)[rank(-projmat[1,])]
+
+RNAcurve(datmat=data1,exonset=exonset,indlist=NULL,
+            plot.title="data 1",colmat=colmat)
+```
+
+There are 8 outliers in the toy dataset: 
+
+```{r, display_data1_outliers,echo=FALSE,fig.height=8}
+par(mfrow=c(4,2),mar=c(2,2,2,2))
+for (case in 1:8) {
+  RNAcurve(datmat=data1,exonset=exonset,indlist=case,
+              lwd=2,same.yaxis=TRUE,
+           plot.title=paste("Subject",case),colmat=colmat)
+}
+```
+
+
+## Transform data
+
+```{r, transform_data}
+data.log = logtransform_data(data=data1)
+data2 = data.log$outdata
+logshift.val = data.log$logshift.val
+logshift.val
+```
+
+```{r, display_data2,echo=FALSE}
+RNAcurve(datmat=data2,exonset=exonset,indlist=NULL,
+            plot.title="log-transformed",colmat=colmat)
+```
+
+```{r, display_data2_outliers,echo=FALSE,fig.height=8}
+par(mfrow=c(4,2),mar=c(2,2,2,2))
+for (case in 1:8) {
+  RNAcurve(datmat=data2,exonset=exonset,indlist=case,lwd=2,
+           plot.title=paste("Subject",case),colmat=colmat)
+}
+```
+
+## Center and normalize data
+
+```{r, normalize_data}
+data.centering = center_data(data=data2,type=1)
+data3 = data.centering$outdata
+msf = data.centering$msf
+data.center = data.centering$data.center
+```
+
+```{r, display_data3,echo=FALSE}
+RNAcurve(datmat=data3,exonset=exonset,indlist=NULL,
+            plot.title="Centered and normalized",colmat=colmat)
+```
+
+## Weigh data
+
+```{r, weigh_data}
+data.weighted = weigh_data(data=data3,dai=dai,method="mean")
+data4 = data.weighted$outdata
+w = data.weighted$w
+plot(w,type="l",main="Weights on each base position")
+```
+
+## Combine all processing steps
+
+```{r, process_data}
+data.process = process_data(rawdata=rawdata,exon=exon,
+                            input.type="whole_intron",output.type="part_intron",intron.len=NULL)
+
+dataI = data.process$dataI     # raw data with new annotation
+datalog = data.process$datalog # log-transformed data
+dataS = data.process$dataS     # normalized data 
+
+```
+
+# Detect outliers
+
+## Step 1: Detect global shape changes
+
+```{r, do_step1}
+set.seed(0);
+step1out = miscGlobal(data=dataS,siglev=1e-5,
+                      PCnum=NULL,eps=NULL,
+                      rm.PCdir=TRUE,ADcutoff=10,filter.dir=TRUE,less.return=FALSE)
+
+outliers1 = step1out$outliers
+```
+
+```{r, echo=FALSE}
+cat(paste0("     # PCs              = ",length(step1out$PCsubset)),"\n")
+cat(paste0("     # step 1 outliers  = ",length(outliers1)),"\n")
+```
+
+
+```{r, step1OS_kde,echo=FALSE}
+appmat=dataS-step1out$resmat
+RNAcurve(datmat=appmat,exonset=exonset,indlist=1:8,lwd=2,
+         plot.title=paste("Low-rank pproximation"),colmat=colmat)
+
+kdeplot.hy(step1out$OS,indlist=outliers1,main="Step 1",
+           text=TRUE,high=0.9,low=0.1)
+legend("topright",bty="n",
+       legend=c(paste("# detected =",length(outliers1))))
+```
+
+Step 1 outliers: 
+
+```{r, display_step1_outliers,echo=FALSE,fig.height=8}
+par(mfrow=c(4,2),mar=c(2,2,2,2))
+for (case in outliers1) {
+  RNAcurve(datmat=datalog,exonset=exonset,indlist=case,lwd=2,
+           plot.title=paste("Subject",case),colmat=colmat)
+}
+```
+
+
+
+## Step 2: Detect local shape changes
+
+```{r, do_step2}
+step2out = miscLocal(miscGlobalobj=step1out,covermat=dataI,exonset=exonset,
+                     siglev=1e-5,cutoff=NULL,
+                     winlength=100,readconstr=10)
+outliers2 = step2out$outliers
+```
+
+```{r, echo=FALSE}
+cat(paste0("     # step 2 outliers  = ",length(outliers2)),"\n")
+```
+
+```{r, step2OS_kde,echo=FALSE}
+RNAcurve(datmat=step1out$resmat,exonset=exonset,indlist=1:8,lwd=2,
+         plot.title=paste("Residual"),colmat=colmat)
+
+
+out2res = step2out$out2res
+par(mar=c(2,2,2,2))
+kdeplot.hy(out2res$onoff_stat,indlist=out2res$outliers,main="Step 2",
+           text=TRUE,textwhat=outliers2,
+           high=0.9,low=0.1)
+abline(v=out2res$cutoff)
+legend("topright",bty="n",
+       legend=c(paste("# detected =",length(outliers2))))
+
+```
+
+```{r, display_step2_outliers,echo=FALSE,fig.height=2}
+par(mfrow=c(1,2),mar=c(2,2,2,2))
+for (case in outliers2) {
+  RNAcurve(datmat=datalog,exonset=exonset,indlist=case,lwd=2,
+           plot.title=paste("Subject",case),colmat=colmat)
+}
+```
+
+# Plotting
+
+
+
+
+
+
+
+
+
+
+
+
