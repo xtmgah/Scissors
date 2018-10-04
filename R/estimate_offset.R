@@ -19,7 +19,7 @@ estimate_offset = function(data.centered=NULL,msf=NULL,cenmat=NULL,
   for (j in 1:nrow(exonset)) {
     exonbase = c(exonbase,c(exonset[j,2]:exonset[j,3]))
   }
-  goodcase = which(apply(rawmat[exonbase,],2,mean)>10)
+  goodcase = which(apply(rawmat[exonbase,],2,mean)>5)
 
   ## estimate g by lowess
   if (length(goodcase)>floor(0.1*n)) {

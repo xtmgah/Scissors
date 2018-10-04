@@ -1,3 +1,5 @@
+#'
+#' @export
 generdir=function(X,ndir){
   # Generates `ndir' directions (with unit norm),
   # orthogonal to d-subsets of X
@@ -6,8 +8,8 @@ generdir=function(X,ndir){
   X = data.matrix(X)
   n = dim(X)[1]
   d = dim(X)[2]
-  i = 0 
-  j = 0 
+  i = 0
+  j = 0
   B = array(0.0,dim=c(ndir,d))
   while(i<ndir){
     j = j+1
