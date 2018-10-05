@@ -1,3 +1,4 @@
+#' written by ------
 #'
 #' @export
 generdir=function(X,ndir){
