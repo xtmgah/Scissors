@@ -35,6 +35,11 @@ get_sparsePD4one = function(basis,data,case) {
 
     ## % calculate OS
     Y = x %*% t(A) # project x onto A (n by ndir)
+    ADstat = apply(Y,2,ADstatWins.hy);
+    indir = which(ADstat<ADcutoff);
+    A = A[indir,];
+    Y = x %*% t(A) # project x onto A (n by length(indir))
+
     out_temp = apply(X=Y,MARGIN=2,
                      FUN= function(t) (t-median(t))/mad(t)); # n by length(indir)
     indexmax=min(which.max(abs(out_temp[case,])))
