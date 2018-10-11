@@ -40,8 +40,7 @@ get_sparsePD4one = function(basis,data,case) {
     A = A[indir,];
     Y = x %*% t(A) # project x onto A (n by length(indir))
 
-    out_temp = apply(X=Y,MARGIN=2,
-                     FUN= function(t) (t-median(t))/mad(t)); # n by length(indir)
+    out_temp = apply(X=Y,MARGIN=2,pd.rate.hy); # n by length(indir)
     indexmax=min(which.max(abs(out_temp[case,])))
     NPS = out_temp[,indexmax];  # n by n
     basis.coef = t(A[indexmax,])
