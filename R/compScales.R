@@ -1,3 +1,5 @@
+#'
+#' @export
 compScales = function(x,
                       rmZeroes=FALSE,maxRatio=NULL,precScale=1e-10){
   # Computes the scales sa and sb (above and below the median).
@@ -15,12 +17,12 @@ compScales = function(x,
   }
   sa = scale1StepM(xa,precScale=precScale)
   sb = scale1StepM(xb,precScale=precScale)
-  if(!is.null(maxRatio)){ 
+  if(!is.null(maxRatio)){
     if(maxRatio < 2) stop("maxRatio must be at least 2")
     sa = min(c(max(sa,sall/maxRatio,na.rm = TRUE),sall*maxRatio),
              na.rm = TRUE)
     sb = min(c(max(sb,sall/maxRatio,na.rm=TRUE),sall*maxRatio),
              na.rm = TRUE)
-  } 
+  }
   return(list(sa=sa,sb=sb,med=med))
 }

@@ -1,3 +1,6 @@
+#' Find intron length to be inserted
+#'
+#' @export
 len.intron.hy = function(exon){
   # 2nd version. (undated on 4/2/2017)
   # Input: exon info.
@@ -9,7 +12,7 @@ len.intron.hy = function(exon){
   epl <- d[seq(1,length(d),by=2)] ;
   epr <- d[seq(2,length(d),by=2)] ;
   ep <- cbind(epl,epr) ;
-  
+
   n.ex = nrow(ep);
   if (n.ex==1){
     return(0)
@@ -19,7 +22,7 @@ len.intron.hy = function(exon){
     srt.len.int = sort(len.int) ; # sorted intron lengths between exons
     ttl.ex = sum(epr - epl + 1) ; # total length of exons
     mean.int = floor(ttl.ex/n.int) ; # Expected mean of intron lengths
-    
+
     if (srt.len.int[1]>mean.int){
       output = mean.int ;
     } else if (srt.len.int[n.int] <= mean.int){
@@ -32,7 +35,7 @@ len.intron.hy = function(exon){
         jp = jc ;
         crr.ttl.int = ttl.ex - sum(srt.len.int[1:jc]) ; # total lengths of introns at current step
         crr.mean.int = floor(crr.ttl.int/(n.int-jc)) ;
-        
+
         if (srt.len.int[jc+1]>crr.mean.int){
           output = crr.mean.int ;
           jc = jp ;

@@ -41,7 +41,8 @@ get_offstat= function(resmat,rawmat,exonset,
   if (length(window_site)>0) {
     for (i in 1:length(window_site)) {
       carea = c((window_site[i]):(window_site[i]-1+window_size[i]));
-      pdrate[i,] = -pd.rate.hy(apply(resmat[carea,],2,sum));
+      pdrate[i,] = pd.rate.hy(-apply(resmat[carea,],2,sum),qrsc=T);
+      # pdrate[i,] = -pd.rate.hy(apply(resmat[carea,],2,sum));
     }
     off_stat = apply(pdrate,2,max)
     where_on = apply(pdrate,2,which.max)
